@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: tv-trading-service
+    app.kubernetes.io/instance: tv-trading-service-instance
+    app.kubernetes.io/version: '1.0.0'
+    app.kubernetes.io/managed-by: kubectl
+  name: tv-trading-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tv-trading-service
+  template:
+    metadata:
+      labels:
+        app: tv-trading-service
+    spec:
+      containers:
+        - image: tv-trading-service-qa:latest
+          imagePullPolicy: Always
+          name: tv-trading-service
+          ports:
+            - containerPort: 3002
+          envFrom:
+            - configMapRef:
+                name: tv-trading-service-config
+            - secretRef:
+                name: tv-trading-service-secret

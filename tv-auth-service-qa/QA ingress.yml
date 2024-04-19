@@ -1,0 +1,187 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tv-ingress-qa
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/tags: Environment=QA
+    #alb.ingress.kubernetes.io/ingress.allow-http: "false" # disable HTTP
+    alb.ingress.kubernetes.io/backend-protocol: "HTTP"
+    alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    # Health Check Settings
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-port: traffic-port
+    alb.ingress.kubernetes.io/healthcheck-path: /docs/
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '15'
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '5'
+    alb.ingress.kubernetes.io/success-codes: '200'
+    alb.ingress.kubernetes.io/healthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
+    # ssl certificate
+    cert-manager.io/issuer: prod-issuer
+    cert-manager.io/issuer-kind: OriginIssuer
+    cert-manager.io/issuer-group: cert-manager.k8s.cloudflare.com
+    # dns record
+    external-dns.alpha.kubernetes.io/hostname: qa-tv-assets-service.tkxel-team.com
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+spec:
+  tls:
+  - hosts:
+    -  qa-tv-assets-service.tkxel-team.com
+    secretName: origin-ca-key
+  - hosts:
+    - qa-tv-collections-service.tkxel-team.com
+    secretName: origin-ca-key
+  - hosts:
+    - qa-tv-auth-service.tkxel-team.com
+    secretName: origin-ca-key
+  - hosts:
+    - qa-tv-notifications-service.tkxel-team.com
+    secretName: origin-ca-key
+  - hosts:
+    - qa-tv-auctions-service.tkxel-team.com
+    secretName: origin-ca-key
+  - hosts:
+    - qa-tv-business-service.tkxel-team.com
+    secretName: origin-ca-key
+  - hosts:
+    - qa-tv-trading-service.tkxel-team.com
+    secretName: origin-ca-key
+  - hosts:
+    - qa-tv-packs-service.tkxel-team.com
+    secretName: origin-ca-key
+  - hosts:
+    - qa-tv-authorization-service.tkxel-team.com
+    secretName: origin-ca-key
+  - hosts:
+    - qa-tv-web-marketplace.tkxel-team.com
+    secretName: origin-ca-key
+  - hosts:
+    -  qa-tv-users-management-service.tkxel-team.com
+    secretName: origin-ca-key
+
+  rules:
+  - host: qa-tv-assets-service.tkxel-team.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tv-assets-service
+            port: 
+              number: 80
+
+  - host: qa-tv-collections-service.tkxel-team.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tv-collections-service
+            port: 
+              number: 80
+
+  - host: qa-tv-auth-service.tkxel-team.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tv-auth-service
+            port: 
+              number: 80
+
+  - host: qa-tv-notifications-service.tkxel-team.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tv-notifications-service
+            port: 
+              number: 80
+
+  - host: qa-tv-auctions-service.tkxel-team.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tv-auctions-service
+            port: 
+              number: 80
+
+  - host: qa-tv-business-service.tkxel-team.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tv-business-service
+            port: 
+              number: 80
+
+  - host: qa-tv-trading-service.tkxel-team.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tv-trading-service
+            port: 
+              number: 80
+
+  - host: qa-tv-packs-service.tkxel-team.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tv-packs-service
+            port: 
+              number: 80
+
+  - host: qa-tv-authorization-service.tkxel-team.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tv-authorization-service
+            port: 
+              number: 80     
+
+  - host: qa-tv-web-marketplace.tkxel-team.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service: 
+            name: tv-web-marketplace
+            port: 
+              number: 80  
+  
+  
+  - host: qa-tv-users-management-service.tkxel-team.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tv-users-management-service
+            port: 
+              number: 80

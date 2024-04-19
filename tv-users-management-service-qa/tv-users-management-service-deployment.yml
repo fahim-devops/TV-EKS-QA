@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: tv-users-management-service
+    app.kubernetes.io/instance: tv-users-management-service-instance
+    app.kubernetes.io/version: '1.0.0'
+    app.kubernetes.io/managed-by: kubectl
+  name: tv-users-management-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tv-users-management-service
+  template:
+    metadata:
+      labels:
+        app: tv-users-management-service
+    spec:
+      containers:
+        - image: /tv-users-management-service-qa
+          imagePullPolicy: Always
+          name: tv-users-management-service
+          ports:
+            - containerPort: 3002
+          envFrom:
+            - configMapRef:
+                name: tv-users-management-service-config
+            - secretRef:
+                name: tv-users-management-service-secret

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: tv-packs-service
+    app.kubernetes.io/instance: tv-packs-service-instance
+    app.kubernetes.io/version: '1.0.0'
+    app.kubernetes.io/managed-by: kubectl
+  name: tv-packs-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tv-packs-service
+  template:
+    metadata:
+      labels:
+        app: tv-packs-service
+    spec:
+      containers:
+        - image: /tv-packs-service-qa:latest
+          imagePullPolicy: Always
+          name: tv-packs-service
+          ports:
+            - containerPort: 3002
+          envFrom:
+            - configMapRef:
+                name: tv-packs-service-config
+            - secretRef:
+                name: tv-packs-service-secret

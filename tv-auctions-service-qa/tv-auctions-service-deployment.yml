@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: tv-auctions-service
+    app.kubernetes.io/instance: tv-auctions-service-instance
+    app.kubernetes.io/version: '1.0.0'
+    app.kubernetes.io/managed-by: kubectl
+  name: tv-auctions-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tv-auctions-service
+  template:
+    metadata:
+      labels:
+        app: tv-auctions-service
+    spec:
+      containers:
+        - image: /tv-assets-service-qa
+          imagePullPolicy: Always
+          name: tv-auctions-service
+          ports:
+            - containerPort: 3002
+          envFrom:
+            - configMapRef:
+                name: tv-auctions-service-config
+            - secretRef:
+                name: tv-auctions-service-secret

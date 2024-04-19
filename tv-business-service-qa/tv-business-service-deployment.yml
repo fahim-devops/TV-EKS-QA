@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: tv-business-service
+    app.kubernetes.io/instance: tv-business-service-instance
+    app.kubernetes.io/version: '1.0.0'
+    app.kubernetes.io/managed-by: kubectl
+  name: tv-business-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tv-business-service
+  template:
+    metadata:
+      labels:
+        app: tv-business-service
+    spec:
+      containers:
+        - image: tv-business-service-qa:latest
+          imagePullPolicy: Always
+          name: tv-business-service
+          ports:
+            - containerPort: 3002
+          envFrom:
+            - configMapRef:
+                name: tv-business-service-config
+       

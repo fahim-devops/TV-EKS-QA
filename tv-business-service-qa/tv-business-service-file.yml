@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: tv-business-service
+    app.kubernetes.io/instance: tv-business-service-instance
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/managed-by: kubectl
+  name: tv-business-service
+spec:
+  type: ClusterIP
+  selector:
+    app: tv-business-service
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3002

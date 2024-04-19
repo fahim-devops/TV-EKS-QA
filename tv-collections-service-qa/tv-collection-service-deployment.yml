@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: tv-web-marketplace-service
+    app.kubernetes.io/instance: tv-co-service-instance
+    app.kubernetes.io/version: '1.0.0'
+    app.kubernetes.io/managed-by: kubectl
+  name: tv-collections-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tv-collections-service
+  template:
+    metadata:
+      labels:
+        app: tv-collections-service
+    spec:
+      containers:
+        - image: tv-collections-service-qa:latest
+          imagePullPolicy: Always
+          name: tv-collections-service
+          ports:
+            - containerPort: 3002
+          envFrom:
+            - configMapRef:
+                name: tv-collections-service-config
+            - secretRef:
+                name: tv-collections-service-secret

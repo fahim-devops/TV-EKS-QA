@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: tv-auth-service
+    app.kubernetes.io/instance: tv-auth-service-instance
+    app.kubernetes.io/version: '1.0.0'
+    app.kubernetes.io/managed-by: kubectl
+  name: tv-auth-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tv-auth-service
+  template:
+    metadata:
+      labels:
+        app: tv-auth-service
+    spec:
+      containers:
+        - image: /tv-auth-service-qa:latest
+          imagePullPolicy: Always
+          name: tv-auth-service
+          ports:
+            - containerPort: 3002
+          envFrom:
+            - configMapRef:
+                name: tv-auth-service-config
+            - secretRef:
+                name: tv-auth-service-secret

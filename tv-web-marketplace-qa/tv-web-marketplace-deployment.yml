@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: tv-web-marketplace
+    app.kubernetes.io/instance: tv-web-marketplace-instance
+    app.kubernetes.io/version: '1.0.0'
+    app.kubernetes.io/managed-by: kubectl
+  name: tv-web-marketplace
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tv-web-marketplace
+  template:
+    metadata:
+      labels:
+        app: tv-web-marketplace
+    spec:
+      containers:
+        - image: tv-web-marketplace-qa:latest
+          imagePullPolicy: Always
+          name: tv-web-marketplace
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: tv-web-marketplace-config
+            - secretRef:
+                name: tv-web-marketplace-secret
+        
+          
+            

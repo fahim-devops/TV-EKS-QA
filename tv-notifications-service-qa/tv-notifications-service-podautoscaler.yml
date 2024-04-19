@@ -1,0 +1,13 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: tv-notifications-service-podscaler
+
+spec:
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: tv-notifications-service

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: tv-notifications-service
+    app.kubernetes.io/instance: tv-notifications-service-instance
+    app.kubernetes.io/version: '1.0.0'
+    app.kubernetes.io/managed-by: kubectl
+  name: tv-notifications-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tv-notifications-service
+  template:
+    metadata:
+      labels:
+        app: tv-notifications-service
+    spec:
+      containers:
+        - image: /tv-notifications-service-qa:latest
+          imagePullPolicy: Always
+          name: tv-notifications-service
+          ports:
+            - containerPort: 3002
+          envFrom:
+            - configMapRef:
+                name: tv-notifications-service-config
+            - secretRef:
+                name: tv-notifications-service-secret

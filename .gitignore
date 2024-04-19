@@ -1,0 +1,21 @@
+# tv-assets-service-qa/tv-assets-service-config.yaml
+# tv-assets-service-qa/tv-assets-service-secret.yaml
+# tv-auctions-service-qa/tv-auctions-service-config.yaml
+# tv-auctions-service-qa/tv-auctions-service-secret.yaml
+# tv-auth-service-qa/tv-auth-service-configmap.yml
+# tv-business-service-qa/tv-business-service-config.yaml
+# tv-auth-service-qa/tv-auth-service-secrets.yml
+# tv-business-service-qa/tv-business-service-secret.yml
+# tv-collection-service-qa/tv-collection-service-configmap.yml
+# tv-collection-service-qa/tv-collections-service-secret.yaml
+# tv-notifications-service-qa/tv-notifications-service-configmap.yaml
+# tv-notifications-service-qa/tv-notifications-service-secret.yaml
+# tv-packs-service-qa/tv-packs-service-configmap.yml
+# tv-packs-service-qa/tv-packs-service-secret.yml
+# tv-trading-service-qa/tv-trading-service-configmap.yaml
+# tv-trading-service-qa/tv-trading-service-secret.yaml
+# tv--users-management-service-qa/tv-users-management-service-configmap.yaml
+# tv--users-management-service-qa/tv-users-management-service-secret.yaml
+# tv-web-marketplace-service-qa/tv-web-marketplace-service-configmap.yaml
+# tv-web-marketplace-service-qa/tv-web-marketplace-service-secret.yaml
+secrets-configs
